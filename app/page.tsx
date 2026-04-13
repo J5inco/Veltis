@@ -112,9 +112,9 @@ export default function Home() {
           <p style={{fontSize:15,color:'rgba(255,255,255,.35)',marginBottom:48,fontWeight:300}}>Commence gratuitement. Passe Premium quand tu es prêt.</p>
           <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,textAlign:'left',alignItems:'stretch'}}>
             {[
-              {tier:'Gratuit',price:'0€',period:'pour toujours',featured:false,duo:false,items:['Modules 1 et 2 complets','Quiz et scénarios de base','Streak et XP'],locked:['Modules 3 à 6','Boussole portefeuille'],btn:'Commencer gratuit',href:'/signup'},
+              {tier:'Gratuit',price:'0€',period:'pour toujours',featured:false,duo:false,items:['Modules 1 et 2 complets','Quiz et scénarios de base','Streak et XP','—','—'],locked:['Modules 3 à 6','Boussole portefeuille'],btn:'Commencer gratuit',href:'/signup'},
               {tier:'Premium',price:'7,99€',period:'par mois · sans engagement',featured:true,duo:false,popular:true,items:['Tous les modules (6)','Boussole sur ton vrai compte','Journal de bord investisseur','Alertes résultats personnalisées','Certificat Investisseur Veltis'],locked:[],btn:'Passer au Premium',href:'/signup'},
-              {tier:'Duo Famille',price:'11,99€',period:'par mois · 2 comptes',featured:false,duo:true,items:['Tout le plan Premium pour deux','Tableau de bord commun','Module "Investir en couple"','Boussole consolidée du foyer','Certificat Investisseur Veltis'],locked:[],btn:'Démarrer en Duo',href:'/signup'},
+              {tier:'Duo Famille',price:'11,99€',period:'par mois · 2 comptes',featured:false,duo:true,items:['Premium pour 2 comptes','Tableau de bord commun','Module « Investir en couple »','Boussole consolidée du foyer','Certificat Investisseur Veltis'],locked:[],btn:'Démarrer en Duo',href:'/signup'},
               {tier:'Pro',price:'14,99€',period:'par mois · sans engagement',featured:false,duo:false,items:['Tous les modules (6)','Screener actions avancé','Rapport trimestriel IA','Webinaire mensuel live','Communauté Discord privée'],locked:[],btn:'Passer au Pro',href:'/signup'},
             ].map((p,i) => (
               <div key={i} style={{background:p.featured?'#3B3BF9':'#181830',border:p.duo?'1px solid rgba(0,212,126,.25)':p.featured?'1px solid #3B3BF9':'1px solid rgba(255,255,255,.07)',borderRadius:20,padding:24,position:'relative',display:'flex',flexDirection:'column'}}>
@@ -124,7 +124,7 @@ export default function Home() {
                 <div style={{fontSize:11,color:p.featured?'rgba(255,255,255,.55)':'rgba(255,255,255,.3)',marginTop:3,marginBottom:18,fontWeight:300}}>{p.period}</div>
                 <div style={{height:1,background:'rgba(255,255,255,.07)',marginBottom:16}}></div>
                 <div style={{display:'flex',flexDirection:'column',gap:8,flex:1}}>
-                  {p.items.map((item,j) => <div key={j} style={{display:'flex',gap:7,fontSize:12,color:p.featured?'rgba(255,255,255,.85)':'rgba(255,255,255,.5)',fontWeight:300,lineHeight:1.4,alignItems:'flex-start'}}><span style={{color:'#00D47E',flexShrink:0,marginTop:1}}>✓</span>{item}</div>)}
+                  {p.items.map((item,j) => item==='—'?<div key={j} style={{height:18}}></div>:<div key={j} style={{display:'flex',gap:7,fontSize:12,color:p.featured?'rgba(255,255,255,.85)':'rgba(255,255,255,.5)',fontWeight:300,lineHeight:1.4,alignItems:'flex-start'}}><span style={{color:'#00D47E',flexShrink:0,marginTop:1}}>✓</span>{item}</div>)}
                   {p.locked.map((item,j) => <div key={j} style={{display:'flex',gap:7,fontSize:12,color:'rgba(255,255,255,.2)',fontWeight:300,alignItems:'flex-start'}}><span style={{flexShrink:0}}>🔒</span>{item}</div>)}
                 </div>
                 <Link href={p.href} style={{display:'block',width:'100%',padding:'13px',borderRadius:100,fontSize:12,fontWeight:700,textAlign:'center',textDecoration:'none',background:p.featured?'white':p.duo?'rgba(0,212,126,.12)':'rgba(255,255,255,.07)',color:p.featured?'#3B3BF9':p.duo?'#00D47E':'white',marginTop:20,border:p.duo?'1px solid rgba(0,212,126,.3)':'none'}}>
