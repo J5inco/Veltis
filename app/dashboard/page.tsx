@@ -171,15 +171,19 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* BOUSSOLE BANNER */}
-        <div style={{background:'#0F0F2A',borderRadius:20,padding:28,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <div>
-            <div style={{fontSize:16,fontWeight:800,color:'white',marginBottom:6}}>Boussole — Suivi de ton portefeuille</div>
-            <div style={{fontSize:13,color:'rgba(255,255,255,.5)',fontWeight:300}}>Saisis tes positions, tiens ton journal de bord, reçois tes alertes résultats.</div>
+        {/* BOUSSOLE BANNER — VERROUILLÉE */}
+        <div style={{background:'#0F0F2A',borderRadius:20,padding:28,display:'flex',alignItems:'center',justifyContent:'space-between',opacity:0.65,position:'relative',overflow:'hidden'}}>
+          <div style={{position:'absolute',inset:0,background:'repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.015) 10px,rgba(255,255,255,.015) 20px)'}}/>
+          <div style={{position:'relative'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6}}>
+              <div style={{fontSize:16,fontWeight:800,color:'white'}}>Boussole — Suivi de ton portefeuille</div>
+              <span style={{fontSize:11,fontWeight:700,background:'rgba(255,255,255,.1)',color:'rgba(255,255,255,.5)',padding:'2px 10px',borderRadius:100,letterSpacing:'.04em'}}>🔒 Bientôt disponible</span>
+            </div>
+            <div style={{fontSize:13,color:'rgba(255,255,255,.4)',fontWeight:300}}>Connexion broker DSP2, journal de bord et alertes résultats — en cours de développement.</div>
           </div>
-          <Link href="/boussole" style={{background:'#3B3BF9',color:'white',padding:'12px 24px',borderRadius:100,fontSize:13,fontWeight:700,textDecoration:'none',whiteSpace:'nowrap',flexShrink:0}}>
-            Ouvrir la Boussole →
-          </Link>
+          <div style={{background:'rgba(255,255,255,.07)',color:'rgba(255,255,255,.3)',padding:'12px 24px',borderRadius:100,fontSize:13,fontWeight:700,whiteSpace:'nowrap',flexShrink:0,position:'relative',cursor:'not-allowed',border:'1px solid rgba(255,255,255,.1)'}}>
+            🔒 Indisponible
+          </div>
         </div>
       </div>
     </div>

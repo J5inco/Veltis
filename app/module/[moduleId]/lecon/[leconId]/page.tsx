@@ -16,6 +16,14 @@ const InteractiveDiversification = dynamic(() => import('@/components/Interactiv
 const InteractiveDCA = dynamic(() => import('@/components/InteractiveDCA'), { ssr: false })
 const InteractivePEATimeline = dynamic(() => import('@/components/InteractivePEATimeline'), { ssr: false })
 const InteractiveOrderSimulator = dynamic(() => import('@/components/InteractiveOrderSimulator'), { ssr: false })
+const InteractivePEAvsCTO = dynamic(() => import('@/components/InteractivePEAvsCTO'), { ssr: false })
+const InteractiveRisk = dynamic(() => import('@/components/InteractiveRisk'), { ssr: false })
+const InteractiveStockCard = dynamic(() => import('@/components/InteractiveStockCard'), { ssr: false })
+const InteractiveDividend = dynamic(() => import('@/components/InteractiveDividend'), { ssr: false })
+const InteractiveBalanceSheet = dynamic(() => import('@/components/InteractiveBalanceSheet'), { ssr: false })
+const InteractiveMargins = dynamic(() => import('@/components/InteractiveMargins'), { ssr: false })
+const InteractiveRebalancing = dynamic(() => import('@/components/InteractiveRebalancing'), { ssr: false })
+const InteractiveTaxHarvesting = dynamic(() => import('@/components/InteractiveTaxHarvesting'), { ssr: false })
 
 export default function LeconPage() {
   const params = useParams()
@@ -238,16 +246,24 @@ export default function LeconPage() {
               <p key={i} style={{fontSize:15,color:'#4A4A6A',lineHeight:1.8,marginBottom:16,fontWeight:300}} dangerouslySetInnerHTML={{__html:para.replace(/\*\*(.*?)\*\*/g,'<strong style="color:#0F0F1A;font-weight:600">$1</strong>')}} />
             ))}
             {/* INTERACTIVE VISUALS */}
+            {moduleId === 1 && leconId === 4 && <InteractivePEAvsCTO />}
+            {moduleId === 1 && leconId === 6 && <InteractiveRisk />}
+            {moduleId === 2 && leconId === 1 && <InteractiveStockCard />}
+            {moduleId === 2 && leconId === 3 && <InteractiveDividend />}
             {moduleId === 3 && leconId === 1 && <InteractiveMargineSécurité />}
             {moduleId === 3 && leconId === 2 && <InteractiveDCF />}
             {moduleId === 3 && leconId === 3 && <InteractiveMultiples />}
+            {moduleId === 3 && leconId === 4 && <InteractiveBalanceSheet />}
+            {moduleId === 3 && leconId === 5 && <InteractiveMargins />}
             {moduleId === 4 && leconId === 1 && <InteractiveDiversification />}
             {moduleId === 4 && leconId === 2 && <InteractiveETFvsActif />}
             {moduleId === 4 && leconId === 3 && <InteractiveDCA />}
+            {moduleId === 4 && leconId === 4 && <InteractiveRebalancing />}
             {moduleId === 4 && leconId === 5 && <InteractivePortfolioBuilder />}
             {moduleId === 5 && leconId === 2 && <InteractivePEATimeline />}
             {moduleId === 5 && leconId === 3 && <InteractiveOrderSimulator />}
             {moduleId === 5 && leconId === 4 && <InteractiveBiasSimulator />}
+            {moduleId === 5 && leconId === 5 && <InteractiveTaxHarvesting />}
             <div style={{marginTop:24,paddingTop:20,borderTop:'1px solid rgba(0,0,0,.08)',display:'flex',justifyContent:'center'}}>
               <button onClick={() => setView('flashcards')} style={{background:'#3B3BF9',color:'white',padding:'12px 28px',borderRadius:100,fontSize:13,fontWeight:700,border:'none',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
                 Continuer avec les flashcards →
