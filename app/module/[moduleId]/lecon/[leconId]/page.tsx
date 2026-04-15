@@ -4,6 +4,9 @@ import { supabase } from '@/lib/supabase'
 import { modules } from '@/lib/modules'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+const InteractiveDCF = dynamic(() => import('@/components/InteractiveDCF'), { ssr: false })
 
 export default function LeconPage() {
   const params = useParams()
@@ -225,6 +228,8 @@ export default function LeconPage() {
             {lecon.texte.split('\n\n').map((para, i) => (
               <p key={i} style={{fontSize:15,color:'#4A4A6A',lineHeight:1.8,marginBottom:16,fontWeight:300}} dangerouslySetInnerHTML={{__html:para.replace(/\*\*(.*?)\*\*/g,'<strong style="color:#0F0F1A;font-weight:600">$1</strong>')}} />
             ))}
+            {/* INTERACTIVE VISUALS */}
+            {moduleId === 3 && leconId === 2 && <InteractiveDCF />}
             <div style={{marginTop:24,paddingTop:20,borderTop:'1px solid rgba(0,0,0,.08)',display:'flex',justifyContent:'center'}}>
               <button onClick={() => setView('flashcards')} style={{background:'#3B3BF9',color:'white',padding:'12px 28px',borderRadius:100,fontSize:13,fontWeight:700,border:'none',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
                 Continuer avec les flashcards →
