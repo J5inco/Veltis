@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 const InteractiveDCF = dynamic(() => import('@/components/InteractiveDCF'), { ssr: false })
 const InteractiveETFvsActif = dynamic(() => import('@/components/InteractiveETFvsActif'), { ssr: false })
 const InteractivePortfolioBuilder = dynamic(() => import('@/components/InteractivePortfolioBuilder'), { ssr: false })
+const InteractiveBiasSimulator = dynamic(() => import('@/components/InteractiveBiasSimulator'), { ssr: false })
 
 export default function LeconPage() {
   const params = useParams()
@@ -234,6 +235,7 @@ export default function LeconPage() {
             {moduleId === 3 && leconId === 2 && <InteractiveDCF />}
             {moduleId === 4 && leconId === 2 && <InteractiveETFvsActif />}
             {moduleId === 4 && leconId === 5 && <InteractivePortfolioBuilder />}
+            {moduleId === 5 && leconId === 4 && <InteractiveBiasSimulator />}
             <div style={{marginTop:24,paddingTop:20,borderTop:'1px solid rgba(0,0,0,.08)',display:'flex',justifyContent:'center'}}>
               <button onClick={() => setView('flashcards')} style={{background:'#3B3BF9',color:'white',padding:'12px 28px',borderRadius:100,fontSize:13,fontWeight:700,border:'none',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
                 Continuer avec les flashcards →
