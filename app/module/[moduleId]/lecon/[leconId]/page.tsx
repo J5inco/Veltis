@@ -23,9 +23,9 @@ export default function LeconPage() {
   const [scoreSaved, setScoreSaved] = useState(false)
   const confettiRef = useRef<boolean>(false)
 
-  const mod = modules.find(m => m.id === moduleId)
+  const mod = modules.find(m => m?.id === moduleId)
   const lecon = mod?.lecons.find(l => l.id === leconId)
-  const isLastLecon = mod && leconId === mod.lecons.length
+  const isLastLecon = !!mod && leconId === mod.lecons.length
   const nextLecon = mod?.lecons.find(l => l.id === leconId + 1)
   const prevLecon = mod?.lecons.find(l => l.id === leconId - 1)
 

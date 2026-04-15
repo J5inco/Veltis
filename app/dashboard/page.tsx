@@ -119,7 +119,7 @@ export default function Dashboard() {
         <div style={{marginBottom:20}}>
           <div style={{fontSize:14,fontWeight:700,marginBottom:16,color:'#0F0F1A'}}>Tes modules</div>
           <div style={{display:'flex',flexDirection:'column',gap:10}}>
-            {modules.map((mod) => {
+            {modules.map((mod) => { if (!mod) return null;
               const status = getStatusLabel(mod.id)
               const isCompleted = !!status
               const pct = status?.pct || 0
