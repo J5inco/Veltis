@@ -10,6 +10,12 @@ const InteractiveDCF = dynamic(() => import('@/components/InteractiveDCF'), { ss
 const InteractiveETFvsActif = dynamic(() => import('@/components/InteractiveETFvsActif'), { ssr: false })
 const InteractivePortfolioBuilder = dynamic(() => import('@/components/InteractivePortfolioBuilder'), { ssr: false })
 const InteractiveBiasSimulator = dynamic(() => import('@/components/InteractiveBiasSimulator'), { ssr: false })
+const InteractiveMargineSécurité = dynamic(() => import('@/components/InteractiveMargineSécurité'), { ssr: false })
+const InteractiveMultiples = dynamic(() => import('@/components/InteractiveMultiples'), { ssr: false })
+const InteractiveDiversification = dynamic(() => import('@/components/InteractiveDiversification'), { ssr: false })
+const InteractiveDCA = dynamic(() => import('@/components/InteractiveDCA'), { ssr: false })
+const InteractivePEATimeline = dynamic(() => import('@/components/InteractivePEATimeline'), { ssr: false })
+const InteractiveOrderSimulator = dynamic(() => import('@/components/InteractiveOrderSimulator'), { ssr: false })
 
 export default function LeconPage() {
   const params = useParams()
@@ -232,9 +238,15 @@ export default function LeconPage() {
               <p key={i} style={{fontSize:15,color:'#4A4A6A',lineHeight:1.8,marginBottom:16,fontWeight:300}} dangerouslySetInnerHTML={{__html:para.replace(/\*\*(.*?)\*\*/g,'<strong style="color:#0F0F1A;font-weight:600">$1</strong>')}} />
             ))}
             {/* INTERACTIVE VISUALS */}
+            {moduleId === 3 && leconId === 1 && <InteractiveMargineSécurité />}
             {moduleId === 3 && leconId === 2 && <InteractiveDCF />}
+            {moduleId === 3 && leconId === 3 && <InteractiveMultiples />}
+            {moduleId === 4 && leconId === 1 && <InteractiveDiversification />}
             {moduleId === 4 && leconId === 2 && <InteractiveETFvsActif />}
+            {moduleId === 4 && leconId === 3 && <InteractiveDCA />}
             {moduleId === 4 && leconId === 5 && <InteractivePortfolioBuilder />}
+            {moduleId === 5 && leconId === 2 && <InteractivePEATimeline />}
+            {moduleId === 5 && leconId === 3 && <InteractiveOrderSimulator />}
             {moduleId === 5 && leconId === 4 && <InteractiveBiasSimulator />}
             <div style={{marginTop:24,paddingTop:20,borderTop:'1px solid rgba(0,0,0,.08)',display:'flex',justifyContent:'center'}}>
               <button onClick={() => setView('flashcards')} style={{background:'#3B3BF9',color:'white',padding:'12px 28px',borderRadius:100,fontSize:13,fontWeight:700,border:'none',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
