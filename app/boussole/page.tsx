@@ -9,6 +9,7 @@ type Position = {
   ticker: string
   nom: string
   prix_achat: number
+  prix_actuel: number | null
   quantite: number
   enveloppe: string
   date_achat: string
@@ -30,11 +31,12 @@ type JournalEntry = {
 
 type Tab = 'portefeuille' | 'journal' | 'rapport'
 
-// Prix réels récupérés depuis Yahoo Finance via /api/prix
-function getPrixActuel(ticker: string, prixAchat: number, prixReels: Record<string, number | null>): number {
+// Prix : 1) saisi manuellement > 2) Yahoo Finance > 3) prix d'achat
+function getPrixActuel(ticker: string, prixAchat: number, prixManuel: number | null, prixReels: Record<string, number | null>): number {
+  if (prixManuel && prixManuel > 0) return prixManuel
   const real = prixReels[ticker.toUpperCase()]
   if (real && real > 0) return real
-  return prixAchat // fallback au prix d'achat si API indisponible
+  return prixAchat
 }
 
 export default function BoussollePage() {
@@ -144,6 +146,13 @@ export default function BoussollePage() {
     setPositions(prev => prev.filter(p => p.id !== id))
   }
 
+  const updatePrixActuel = async (id: string, nouveauPrix: string) => {
+    const prix = parseFloat(nouveauPrix)
+    const valeur = isNaN(prix) ? null : prix
+    await supabase.from('boussole_positions').update({ prix_actuel: valeur }).eq('id', id)
+    setPositions(prev => prev.map(p => p.id === id ? { ...p, prix_actuel: valeur } : p))
+  }
+
   const updateJournalStatut = async (id: string, statut: string) => {
     await supabase.from('boussole_journal').update({ statut }).eq('id', id)
     setJournal(prev => prev.map(j => j.id === id ? { ...j, statut } : j))
@@ -151,7 +160,7 @@ export default function BoussollePage() {
 
   // Portfolio calculations
   const portfolioStats = positions.reduce((acc, pos) => {
-    const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, prixReels)
+    const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels)
     const valeurActuelle = prixActuel * pos.quantite
     const valeurAchat = pos.prix_achat * pos.quantite
     const pnl = valeurActuelle - valeurAchat
@@ -275,10 +284,10 @@ export default function BoussollePage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {/* Header */}
                 <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', gap: 8, padding: '8px 16px', fontSize: 10, color: '#9898B8', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 700 }}>
-                  <span>Titre</span><span>Qté</span><span>Prix achat</span><span>Valeur actuelle</span><span>+/- value</span><span>Enveloppe</span><span></span>
+                  <span>Titre</span><span>Qté</span><span>Prix achat</span><span>Prix actuel</span><span>+/- value</span><span>Enveloppe</span><span></span>
                 </div>
                 {positions.map(pos => {
-                  const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, prixReels)
+                  const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels)
                   const valActuelle = prixActuel * pos.quantite
                   const pnl = valActuelle - pos.prix_achat * pos.quantite
                   const pnlPct = ((pnl / (pos.prix_achat * pos.quantite)) * 100).toFixed(1)
@@ -291,7 +300,21 @@ export default function BoussollePage() {
                       </div>
                       <div style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.quantite}</div>
                       <div style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.prix_achat.toFixed(2)}€</div>
-                      <div style={{ fontSize: 13, fontWeight: 600 }}>{valActuelle.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€</div>
+                      <div>
+                        <input
+                          type="number"
+                          step="0.01"
+                          defaultValue={pos.prix_actuel ?? (prixReels[pos.ticker.toUpperCase()] ?? '')}
+                          placeholder={prixReels[pos.ticker.toUpperCase()] ? prixReels[pos.ticker.toUpperCase()]?.toFixed(2) : 'Saisir'}
+                          onBlur={(e) => updatePrixActuel(pos.id, e.target.value)}
+                          style={{
+                            width: '80px', padding: '5px 8px', fontSize: 12, fontWeight: 600,
+                            border: '1px solid rgba(0,0,0,.1)', borderRadius: 6, fontFamily: 'Sora,sans-serif',
+                            background: pos.prix_actuel ? '#EBEBFF' : 'white', color: '#0F0F1A',
+                          }}
+                        />
+                        <div style={{ fontSize: 9, color: '#9898B8', marginTop: 2 }}>{valActuelle.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€</div>
+                      </div>
                       <div style={{ fontSize: 13, fontWeight: 700, color: isPos ? '#00D47E' : '#FF6B6B' }}>
                         {isPos ? '+' : ''}{pnl.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€
                         <div style={{ fontSize: 10, fontWeight: 600 }}>{isPos ? '+' : ''}{pnlPct}%</div>
@@ -312,7 +335,7 @@ export default function BoussollePage() {
                     <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 12 }}>Répartition sectorielle</div>
                     <div style={{ height: 10, borderRadius: 5, overflow: 'hidden', display: 'flex', marginBottom: 8 }}>
                       {positions.map((pos, i) => {
-                        const val = getPrixActuel(pos.ticker, pos.prix_achat, prixReels) * pos.quantite
+                        const val = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels) * pos.quantite
                         const pct = (val / portfolioStats.totalActuel) * 100
                         const colors = ['#3B3BF9', '#00D47E', '#FFD700', '#FF6B6B', '#FFA500', '#9898B8', '#C4B5FD']
                         return <div key={pos.id} style={{ width: `${pct}%`, background: colors[i % colors.length] }} />
@@ -320,7 +343,7 @@ export default function BoussollePage() {
                     </div>
                     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                       {positions.map((pos, i) => {
-                        const val = getPrixActuel(pos.ticker, pos.prix_achat, prixReels) * pos.quantite
+                        const val = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels) * pos.quantite
                         const pct = ((val / portfolioStats.totalActuel) * 100).toFixed(0)
                         const colors = ['#3B3BF9', '#00D47E', '#FFD700', '#FF6B6B', '#FFA500', '#9898B8', '#C4B5FD']
                         return (
@@ -568,7 +591,7 @@ export default function BoussollePage() {
                   <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 14 }}>Analyse de chaque position</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {positions.map(pos => {
-                      const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, prixReels)
+                      const prixActuel = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels)
                       const pnl = (prixActuel - pos.prix_achat) * pos.quantite
                       const pnlPct = ((prixActuel - pos.prix_achat) / pos.prix_achat * 100).toFixed(1)
                       const isPos = pnl >= 0
@@ -611,7 +634,7 @@ export default function BoussollePage() {
                     )}
                     {positions.length > 0 && (() => {
                       const maxPos = positions.reduce((max, pos) => {
-                        const val = getPrixActuel(pos.ticker, pos.prix_achat, prixReels) * pos.quantite
+                        const val = getPrixActuel(pos.ticker, pos.prix_achat, pos.prix_actuel, prixReels) * pos.quantite
                         return val > max.val ? { ticker: pos.ticker, val } : max
                       }, { ticker: '', val: 0 })
                       const pct = (maxPos.val / portfolioStats.totalActuel * 100).toFixed(0)

@@ -1,6 +1,5 @@
 {
   "functions": {
-    "api/prix.js": { "runtime": "nodejs20.x" },
-    "api/test-ticker.js": { "runtime": "nodejs20.x" }
+    "api/prix.js": { "runtime": "nodejs20.x" }
   }
 }
