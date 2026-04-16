@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api-serverless/prix.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/prix", "destination": "/api-serverless/prix" }
+  ]
+}
