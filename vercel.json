@@ -2,9 +2,19 @@
   "functions": {
     "api-serverless/prix.js": {
       "runtime": "nodejs20.x"
+    },
+    "api-serverless/test-ticker.js": {
+      "runtime": "nodejs20.x"
     }
   },
   "rewrites": [
-    { "source": "/api/prix", "destination": "/api-serverless/prix" }
+    {
+      "source": "/api/prix",
+      "destination": "/api-serverless/prix"
+    },
+    {
+      "source": "/api/test-ticker",
+      "destination": "/api-serverless/test-ticker"
+    }
   ]
 }
