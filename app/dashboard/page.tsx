@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { modules } from '@/lib/modules'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { getStreak, getLevel, getLevelProgress } from '@/lib/streak'
 
 type ModuleScore = {
   module_id: number
@@ -17,6 +18,8 @@ export default function Dashboard() {
   const [user, setUser] = useState<{email?:string, user_metadata?:{nom?:string}} | null>(null)
   const [loading, setLoading] = useState(true)
   const [scores, setScores] = useState<ModuleScore[]>([])
+  const [streakData, setStreakData] = useState<{streak_days:number,total_xp:number,longest_streak:number}|null>(null)
+  const [recommendedModule, setRecommendedModule] = useState<number|null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -28,6 +31,12 @@ export default function Dashboard() {
         .select('*')
         .eq('user_id', data.user.id)
       setScores(scoresData || [])
+      // Fetch streak
+      const streak = await getStreak(data.user.id)
+      if (streak) setStreakData(streak)
+      // Fetch recommended module
+      const { data: onb } = await supabase.from('user_onboarding').select('recommended_module').eq('user_id', data.user.id).single()
+      if (onb) setRecommendedModule(onb.recommended_module)
       setLoading(false)
     })
   }, [router])
@@ -79,6 +88,7 @@ export default function Dashboard() {
           Veltis<span style={{color:'#3B3BF9'}}>.</span>
         </Link>
         <div style={{display:'flex',alignItems:'center',gap:12}}>
+          <Link href="/actu" style={{fontSize:12,color:'#4A4A6A',textDecoration:'none',padding:'6px 12px',borderRadius:100,border:'1px solid rgba(0,0,0,.08)'}}>📰 Actu</Link>
           <div style={{fontSize:12,color:'#9898B8',background:'#F8F7F5',padding:'6px 12px',borderRadius:100}}>{user?.email}</div>
           <button onClick={handleLogout} style={{fontSize:12,color:'#9898B8',background:'none',border:'1px solid rgba(0,0,0,.1)',borderRadius:100,padding:'6px 14px',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>Déconnexion</button>
         </div>
@@ -87,9 +97,39 @@ export default function Dashboard() {
       <div style={{maxWidth:900,margin:'0 auto',padding:'40px 24px'}}>
 
         {/* HEADER */}
-        <div style={{marginBottom:32}}>
-          <h1 style={{fontSize:28,fontWeight:800,letterSpacing:'-.03em',marginBottom:4}}>Bonjour {prenom} 👋</h1>
+        <div style={{marginBottom:28}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12,marginBottom:16}}>
+            <h1 style={{fontSize:28,fontWeight:800,letterSpacing:'-.03em'}}>Bonjour {prenom} 👋</h1>
+            {streakData && (() => {
+              const level = getLevel(streakData.total_xp)
+              const progress = getLevelProgress(streakData.total_xp)
+              return (
+                <div style={{display:'flex',gap:10,alignItems:'center'}}>
+                  <div style={{background:'#FFF8E7',border:'1px solid #FFD700',borderRadius:100,padding:'6px 14px',display:'flex',alignItems:'center',gap:6}}>
+                    <span style={{fontSize:14}}>🔥</span>
+                    <span style={{fontSize:13,fontWeight:700,color:'#B8860B'}}>{streakData.streak_days} jour{streakData.streak_days > 1 ? 's' : ''}</span>
+                  </div>
+                  <div style={{background:'white',border:'1px solid rgba(0,0,0,.08)',borderRadius:100,padding:'6px 14px',display:'flex',alignItems:'center',gap:8,minWidth:160}}>
+                    <span style={{fontSize:14}}>{level.icon}</span>
+                    <div>
+                      <div style={{fontSize:11,fontWeight:700,color:level.color}}>{level.name}</div>
+                      <div style={{width:80,height:3,background:'#F0F0F0',borderRadius:2,overflow:'hidden',marginTop:2}}>
+                        <div style={{height:'100%',width:`${progress}%`,background:level.color,borderRadius:2}}/>
+                      </div>
+                    </div>
+                    <span style={{fontSize:11,color:'#9898B8',fontWeight:600}}>{streakData.total_xp} XP</span>
+                  </div>
+                </div>
+              )
+            })()}
+          </div>
           <p style={{fontSize:14,color:'#4A4A6A',fontWeight:300}}>Continue ta progression — tous les modules sont accessibles gratuitement</p>
+          {recommendedModule && recommendedModule > 1 && (
+            <div style={{marginTop:10,background:'#EBEBFF',border:'1px solid rgba(59,59,249,.2)',borderRadius:10,padding:'8px 14px',display:'inline-flex',alignItems:'center',gap:8}}>
+              <span style={{fontSize:11,color:'#3B3BF9'}}>💡</span>
+              <span style={{fontSize:12,color:'#3B3BF9',fontWeight:600}}>Recommandé pour toi : commence au Module {recommendedModule}</span>
+            </div>
+          )}
         </div>
 
         {/* STATS */}

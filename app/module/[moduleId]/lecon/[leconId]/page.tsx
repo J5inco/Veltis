@@ -5,6 +5,7 @@ import { modules } from '@/lib/modules'
 import Link from 'next/link'
 import { useRouter, useParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { updateStreak, XP_PER_LECON, XP_PER_MODULE } from '@/lib/streak'
 
 const InteractiveDCF = dynamic(() => import('@/components/InteractiveDCF'), { ssr: false })
 const InteractiveETFvsActif = dynamic(() => import('@/components/InteractiveETFvsActif'), { ssr: false })
@@ -77,6 +78,9 @@ export default function LeconPage() {
     if (!userId || scoreSaved) return
     setScoreSaved(true)
     const totalQ = lecon?.quiz.length || 0
+    // Update streak + XP
+    const xpGain = isLastLecon ? XP_PER_MODULE : XP_PER_LECON
+    await updateStreak(userId, xpGain)
 
     // Save lecon progress
     await supabase.from('progressions').upsert({
@@ -344,16 +348,16 @@ export default function LeconPage() {
             <div style={{fontSize:22,fontWeight:800,marginBottom:8}}>{pct === 100 ? 'Parfait !' : pct >= 80 ? 'Très bien !' : 'Bien !'}</div>
             <div style={{fontSize:14,color:'#4A4A6A',marginBottom:8,fontWeight:300}}>{score} / {lecon.quiz.length} bonnes réponses</div>
             <div style={{fontSize:24,fontWeight:800,color:'#3B3BF9',marginBottom:24}}>{pct}%</div>
-            <div style={{display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
-              {nextLecon && (
-                <Link href={`/module/${moduleId}/lecon/${leconId+1}`} style={{background:'#3B3BF9',color:'white',padding:'12px 24px',borderRadius:100,fontSize:13,fontWeight:700,textDecoration:'none'}}>
-                  Leçon suivante →
-                </Link>
-              )}
-              <button onClick={() => {setView('quiz');setQuizIndex(0);setAnswered(null);setScore(0);setQuizDone(false)}} style={{background:'white',color:'#4A4A6A',padding:'12px 24px',borderRadius:100,fontSize:13,fontWeight:600,border:'1px solid rgba(0,0,0,.08)',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
-                Refaire
+            {nextLecon && (
+              <Link href={`/module/${moduleId}/lecon/${leconId+1}`} style={{display:'block',background:'#3B3BF9',color:'white',padding:'16px 32px',borderRadius:100,fontSize:15,fontWeight:700,textDecoration:'none',marginBottom:12}}>
+                Leçon suivante : {nextLecon.title} →
+              </Link>
+            )}
+            <div style={{display:'flex',gap:10,justifyContent:'center',flexWrap:'wrap',marginTop:8}}>
+              <button onClick={() => {setView('quiz');setQuizIndex(0);setAnswered(null);setScore(0);setQuizDone(false)}} style={{background:'white',color:'#4A4A6A',padding:'10px 20px',borderRadius:100,fontSize:12,fontWeight:600,border:'1px solid rgba(0,0,0,.08)',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>
+                Refaire le quiz
               </button>
-              <Link href="/dashboard" style={{background:'white',color:'#4A4A6A',padding:'12px 24px',borderRadius:100,fontSize:13,fontWeight:600,textDecoration:'none',border:'1px solid rgba(0,0,0,.08)'}}>
+              <Link href="/dashboard" style={{background:'white',color:'#9898B8',padding:'10px 20px',borderRadius:100,fontSize:12,fontWeight:600,textDecoration:'none',border:'1px solid rgba(0,0,0,.08)'}}>
                 Tableau de bord
               </Link>
             </div>

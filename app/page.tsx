@@ -35,6 +35,7 @@ export default function Home() {
           <a href="#modules" onClick={scrollTo('modules')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Modules</a>
           <a href="#how" onClick={scrollTo('how')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Comment ça marche</a>
           <a href="#pricing" onClick={scrollTo('pricing')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Tarifs</a>
+          <a href="/actu" style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>📰 Actu</a>
           {user ? (
             <Link href="/dashboard" style={{background:'#3B3BF9',color:'white',padding:'10px 22px',borderRadius:100,fontSize:13,fontWeight:600,textDecoration:'none'}}>
               {prenom ? `Mon espace →` : 'Mon espace →'}
@@ -71,6 +72,40 @@ export default function Home() {
         </div>
         <p style={{fontSize:11,color:'#9898B8'}}>6 modules gratuits · Sans carte bancaire · Résiliable à tout moment</p>
       </section>
+
+      {/* SOCIAL PROOF */}
+      <div style={{background:'white',padding:'32px 56px',borderBottom:'1px solid rgba(0,0,0,.06)'}}>
+        <div style={{maxWidth:1000,margin:'0 auto',display:'flex',alignItems:'center',justifyContent:'space-between',gap:32,flexWrap:'wrap'}}>
+          <div style={{display:'flex',alignItems:'center',gap:16}}>
+            <div style={{display:'flex'}}>
+              {['🟣','🔵','🟢','🟡','🔴'].map((c,i) => (
+                <div key={i} style={{width:32,height:32,borderRadius:'50%',background:['#C4B5FD','#93C5FD','#86EFAC','#FCD34D','#FCA5A5'][i],border:'2px solid white',marginLeft:i>0?-8:0,display:'flex',alignItems:'center',justifyContent:'center',fontSize:14}}>
+                  {['👩','👨','👩','👨','👩'][i]}
+                </div>
+              ))}
+            </div>
+            <div>
+              <div style={{fontSize:14,fontWeight:700,color:'#0F0F1A'}}>+500 investisseurs en formation</div>
+              <div style={{display:'flex',alignItems:'center',gap:4}}>
+                {[1,2,3,4,5].map(i => <span key={i} style={{color:'#FFD700',fontSize:12}}>★</span>)}
+                <span style={{fontSize:11,color:'#9898B8',marginLeft:4}}>4,9/5 · Bêta testeurs</span>
+              </div>
+            </div>
+          </div>
+          <div style={{display:'flex',gap:20,flexWrap:'wrap'}}>
+            {[
+              { text: "«Enfin une app qui explique le PEA clairement. J’ai ouvert le mien en 15 min après le module 5.»", author: 'Thomas, 28 ans · Lyon' },
+              { text: "«Les visuels interactifs changent tout. Le simulateur DCF m’a fait comprendre pourquoi les taux font baisser les marchés.»", author: 'Camille, 31 ans · Paris' },
+              { text: "«J’avais peur de la bourse depuis 5 ans. Module 1 terminé en 2 soirées — clair, simple, sans jargon inutile.»", author: 'Mehdi, 26 ans · Bordeaux' },
+            ].map((t,i) => (
+              <div key={i} style={{background:'#F8F7F5',borderRadius:14,padding:'14px 18px',maxWidth:260,border:'1px solid rgba(0,0,0,.06)'}}>
+                <p style={{fontSize:12,color:'#4A4A6A',lineHeight:1.6,marginBottom:8,fontStyle:'italic',fontWeight:300}}>{t.text}</p>
+                <div style={{fontSize:11,color:'#9898B8',fontWeight:600}}>{t.author}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* STATS */}
       <div style={{background:'#F8F7F5',padding:'48px 56px',borderTop:'1px solid rgba(0,0,0,.08)',borderBottom:'1px solid rgba(0,0,0,.08)'}}>
