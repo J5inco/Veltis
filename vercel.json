@@ -1,5 +1,0 @@
-{
-  "functions": {
-    "api/prix.js": { "runtime": "nodejs20.x" }
-  }
-}
