@@ -169,7 +169,7 @@ export default function LeconPage() {
         <h1 style={{fontSize:48,fontWeight:800,color:'white',letterSpacing:'-.04em',marginBottom:8}}>{msg.title}</h1>
         <p style={{fontSize:16,color:'rgba(255,255,255,.5)',marginBottom:40,fontWeight:300,maxWidth:420}}>{msg.sub}</p>
 
-        <div style={{background:'rgba(255,255,255,.07)',borderRadius:24,padding:'32px 48px',marginBottom:40,border:'1px solid rgba(255,255,255,.1)'}}>
+        <div className="v-card" style={{background:'rgba(255,255,255,.07)',borderRadius:24,padding:'32px 48px',marginBottom:40,border:'1px solid rgba(255,255,255,.1)'}}>
           <div style={{fontSize:72,fontWeight:800,color:msg.color,letterSpacing:'-.04em',lineHeight:1}}>{pct}%</div>
           <div style={{fontSize:14,color:'rgba(255,255,255,.4)',marginTop:8,fontWeight:300}}>{score} / {lecon.quiz.length} bonnes réponses · Module {moduleId}</div>
           <div style={{marginTop:20,height:6,background:'rgba(255,255,255,.1)',borderRadius:3,overflow:'hidden'}}>
@@ -211,7 +211,7 @@ export default function LeconPage() {
     <div style={{fontFamily:'Sora,sans-serif',minHeight:'100vh',background:'#F8F7F5'}}>
 
       {/* NAV */}
-      <nav style={{background:'white',borderBottom:'1px solid rgba(0,0,0,.08)',padding:'14px 32px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:100}}>
+      <nav className="v-nav" style={{background:'white',borderBottom:'1px solid rgba(0,0,0,.08)',padding:'14px 32px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:100}}>
         <Link href="/" style={{fontSize:22,fontWeight:800,textDecoration:'none',color:'#0F0F1A',letterSpacing:'-.04em'}}>
           Veltis<span style={{color:'#3B3BF9'}}>.</span>
         </Link>
@@ -224,7 +224,7 @@ export default function LeconPage() {
         <div style={{height:4,background:'#3B3BF9',width:`${(leconId/mod.lecons.length)*100}%`,transition:'width .3s'}}></div>
       </div>
 
-      <div style={{maxWidth:720,margin:'0 auto',padding:'40px 24px'}}>
+      <div className="v-page" style={{maxWidth:720,margin:'0 auto',padding:'40px 24px'}}>
 
         {/* HEADER */}
         <div style={{marginBottom:28}}>
@@ -245,7 +245,7 @@ export default function LeconPage() {
 
         {/* TEXTE */}
         {view === 'texte' && (
-          <div style={{background:'white',borderRadius:20,padding:32,border:'1px solid rgba(0,0,0,.08)'}}>
+          <div className="v-card" style={{background:'white',borderRadius:20,padding:32,border:'1px solid rgba(0,0,0,.08)'}}>
             {lecon.texte.split('\n\n').map((para, i) => (
               <p key={i} style={{fontSize:15,color:'#4A4A6A',lineHeight:1.8,marginBottom:16,fontWeight:300}} dangerouslySetInnerHTML={{__html:para.replace(/\*\*(.*?)\*\*/g,'<strong style="color:#0F0F1A;font-weight:600">$1</strong>')}} />
             ))}
@@ -282,7 +282,7 @@ export default function LeconPage() {
             <div style={{textAlign:'center',marginBottom:16,fontSize:12,color:'#9898B8'}}>{cardIndex+1} / {lecon.flashcards.length}</div>
             <div
               onClick={() => setCardFlipped(f => !f)}
-              style={{background:cardFlipped?'#0F0F2A':'white',borderRadius:20,padding:40,border:'1px solid rgba(0,0,0,.08)',minHeight:200,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .2s',textAlign:'center'}}
+              className="v-card" style={{background:cardFlipped?'#0F0F2A':'white',borderRadius:20,padding:40,border:'1px solid rgba(0,0,0,.08)',minHeight:200,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',transition:'all .2s',textAlign:'center'}}
             >
               <div>
                 <div style={{fontSize:10,color:cardFlipped?'rgba(255,255,255,.4)':'#9898B8',textTransform:'uppercase',letterSpacing:'.06em',marginBottom:12}}>
@@ -343,7 +343,7 @@ export default function LeconPage() {
 
         {/* QUIZ DONE (non-last lecon) */}
         {view === 'quiz' && quizDone && !isLastLecon && (
-          <div style={{background:'white',borderRadius:20,padding:40,textAlign:'center',border:'1px solid rgba(0,0,0,.08)'}}>
+          <div className="v-card" style={{background:'white',borderRadius:20,padding:40,textAlign:'center',border:'1px solid rgba(0,0,0,.08)'}}>
             <div style={{fontSize:48,marginBottom:16}}>{pct === 100 ? '🏆' : pct >= 80 ? '⭐' : '👍'}</div>
             <div style={{fontSize:22,fontWeight:800,marginBottom:8}}>{pct === 100 ? 'Parfait !' : pct >= 80 ? 'Très bien !' : 'Bien !'}</div>
             <div style={{fontSize:14,color:'#4A4A6A',marginBottom:8,fontWeight:300}}>{score} / {lecon.quiz.length} bonnes réponses</div>
