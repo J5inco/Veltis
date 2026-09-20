@@ -35,13 +35,13 @@ export default function SignupPage() {
 
   return (
     <div style={{fontFamily:'Sora,sans-serif',minHeight:'100vh',background:'#F8F7F5',display:'flex',flexDirection:'column'}}>
-      <nav style={{padding:'18px 40px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <nav className="v-nav" style={{padding:'18px 40px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <Link href="/" style={{fontSize:20,fontWeight:700,textDecoration:'none',color:'#0F0F1A'}}>Veltis<span style={{color:'#3B3BF9'}}>.</span></Link>
         <Link href="/login" style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Déjà un compte ? Se connecter</Link>
       </nav>
 
       <div style={{flex:1,display:'flex',alignItems:'center',justifyContent:'center',padding:24}}>
-        <div style={{background:'white',borderRadius:24,padding:40,width:'100%',maxWidth:420,border:'1px solid rgba(0,0,0,.08)'}}>
+        <div className="v-card" style={{background:'white',borderRadius:24,padding:40,width:'100%',maxWidth:420,border:'1px solid rgba(0,0,0,.08)'}}>
           <div style={{textAlign:'center',marginBottom:32}}>
             <h1 style={{fontSize:28,fontWeight:800,letterSpacing:'-.03em',marginBottom:8}}>Créer ton compte</h1>
             <p style={{fontSize:14,color:'#4A4A6A',fontWeight:300}}>2 modules gratuits, sans carte bancaire</p>
