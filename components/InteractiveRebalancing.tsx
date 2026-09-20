@@ -107,7 +107,7 @@ export default function InteractiveRebalancing() {
             <div key={i} style={{ width: `${a.pct}%`, background: a.color, transition: 'width .4s ease' }} />
           ))}
         </div>
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           {[
             { label: 'Actions', pct: rebalanced ? cibleActions : drift.pctActions, target: cibleActions, color: '#3B3BF9' },
             { label: 'Obligations', pct: rebalanced ? cibleObligations : drift.pctObligations, target: cibleObligations, color: '#FFD700' },
