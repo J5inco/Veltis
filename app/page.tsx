@@ -27,14 +27,14 @@ export default function Home() {
     <div style={{fontFamily:'Sora,sans-serif',background:'#fff',color:'#0F0F1A'}}>
 
       {/* NAV */}
-      <nav style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 56px',background:'#fff',borderBottom:'1px solid rgba(0,0,0,.08)',position:'sticky',top:0,zIndex:100}}>
+      <nav className="v-nav" style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'16px 56px',background:'#fff',borderBottom:'1px solid rgba(0,0,0,.08)',position:'sticky',top:0,zIndex:100}}>
         <div style={{fontSize:24,fontWeight:800,color:'#0F0F1A',letterSpacing:'-.04em',cursor:'pointer'}} onClick={() => window.scrollTo({top:0,behavior:'smooth'})}>
           Veltis<span style={{color:'#3B3BF9'}}>.</span>
         </div>
-        <div style={{display:'flex',alignItems:'center',gap:32}}>
-          <a href="#modules" onClick={scrollTo('modules')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Modules</a>
-          <a href="#how" onClick={scrollTo('how')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Comment ça marche</a>
-          <a href="#pricing" onClick={scrollTo('pricing')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Tarifs</a>
+        <div className="v-nav-links" style={{display:'flex',alignItems:'center',gap:32}}>
+          <a className="v-hide-m" href="#modules" onClick={scrollTo('modules')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Modules</a>
+          <a className="v-hide-m" href="#how" onClick={scrollTo('how')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Comment ça marche</a>
+          <a className="v-hide-m" href="#pricing" onClick={scrollTo('pricing')} style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>Tarifs</a>
           <a href="/actu" style={{fontSize:13,color:'#4A4A6A',textDecoration:'none'}}>📰 Actu</a>
           {user ? (
             <Link href="/dashboard" style={{background:'#3B3BF9',color:'white',padding:'10px 22px',borderRadius:100,fontSize:13,fontWeight:600,textDecoration:'none'}}>
@@ -47,18 +47,18 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section style={{textAlign:'center',padding:'88px 40px 80px'}}>
+      <section className="v-hero" style={{textAlign:'center',padding:'88px 40px 80px'}}>
         <div style={{display:'inline-flex',alignItems:'center',gap:6,background:'#EBEBFF',color:'#3B3BF9',fontSize:11,fontWeight:600,padding:'5px 14px',borderRadius:100,marginBottom:28,border:'1px solid rgba(59,59,249,.2)'}}>
           <div style={{width:5,height:5,borderRadius:'50%',background:'#3B3BF9'}}></div>
           Éducation financière · 100% France
         </div>
-        <h1 style={{fontSize:58,fontWeight:800,lineHeight:1.05,letterSpacing:'-.04em',marginBottom:18}}>
+        <h1 className="v-h1" style={{fontSize:58,fontWeight:800,lineHeight:1.05,letterSpacing:'-.04em',marginBottom:18}}>
           Investir en bourse.<br/><span style={{color:'#3B3BF9'}}>On t&apos;explique tout.</span>
         </h1>
         <p style={{fontSize:18,color:'#4A4A6A',lineHeight:1.65,maxWidth:520,margin:'0 auto 36px',fontWeight:300}}>
           Des modules concrets, une fiscalité PEA pensée pour la France, et la Boussole pour t&apos;accompagner à chaque décision.
         </p>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:14,marginBottom:14}}>
+        <div className="v-cta-row" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:14,marginBottom:14}}>
           {user ? (
             <Link href="/dashboard" style={{background:'#3B3BF9',color:'white',padding:'15px 36px',borderRadius:100,fontSize:15,fontWeight:700,textDecoration:'none'}}>
               Reprendre ma formation →
@@ -74,7 +74,7 @@ export default function Home() {
       </section>
 
       {/* SOCIAL PROOF */}
-      <div style={{background:'white',padding:'32px 56px',borderBottom:'1px solid rgba(0,0,0,.06)'}}>
+      <div className="v-sec-sm" style={{background:'white',padding:'32px 56px',borderBottom:'1px solid rgba(0,0,0,.06)'}}>
         <div style={{maxWidth:1000,margin:'0 auto',display:'flex',alignItems:'center',justifyContent:'space-between',gap:32,flexWrap:'wrap'}}>
           <div style={{display:'flex',alignItems:'center',gap:16}}>
             <div style={{display:'flex'}}>
@@ -98,7 +98,7 @@ export default function Home() {
               { text: "«Les visuels interactifs changent tout. Le simulateur DCF m’a fait comprendre pourquoi les taux font baisser les marchés.»", author: 'Camille, 31 ans · Paris' },
               { text: "«J’avais peur de la bourse depuis 5 ans. Module 1 terminé en 2 soirées — clair, simple, sans jargon inutile.»", author: 'Mehdi, 26 ans · Bordeaux' },
             ].map((t,i) => (
-              <div key={i} style={{background:'#F8F7F5',borderRadius:14,padding:'14px 18px',maxWidth:260,border:'1px solid rgba(0,0,0,.06)'}}>
+              <div key={i} className="v-testi" style={{background:'#F8F7F5',borderRadius:14,padding:'14px 18px',maxWidth:260,border:'1px solid rgba(0,0,0,.06)'}}>
                 <p style={{fontSize:12,color:'#4A4A6A',lineHeight:1.6,marginBottom:8,fontStyle:'italic',fontWeight:300}}>{t.text}</p>
                 <div style={{fontSize:11,color:'#9898B8',fontWeight:600}}>{t.author}</div>
               </div>
@@ -108,15 +108,15 @@ export default function Home() {
       </div>
 
       {/* STATS */}
-      <div style={{background:'#F8F7F5',padding:'48px 56px',borderTop:'1px solid rgba(0,0,0,.08)',borderBottom:'1px solid rgba(0,0,0,.08)'}}>
-        <div style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',textAlign:'center'}}>
+      <div className="v-sec-sm" style={{background:'#F8F7F5',padding:'48px 56px',borderTop:'1px solid rgba(0,0,0,.08)',borderBottom:'1px solid rgba(0,0,0,.08)'}}>
+        <div className="v-grid-2" style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'repeat(4,1fr)',textAlign:'center'}}>
           {[
             {n:'2,5%',d:'des Français ont fait une transaction boursière en 2024',s:'AMF · Juil. 2024'},
             {n:'58%',d:'des Américains investissent en bourse, soit 23× plus',s:'Gallup · 2024'},
             {n:'56%',d:'des Français confondent encore investir et spéculer',s:'Goliaths.io · Oct. 2024'},
             {n:'53%',d:"des moins de 35 ans veulent investir mais n'osent pas",s:'Baromètre AMF · 2024'},
           ].map((s,i) => (
-            <div key={i} style={{padding:'0 20px',borderRight:i<3?'1px solid rgba(0,0,0,.07)':'none'}}>
+            <div key={i} className="v-stat" style={{padding:'0 20px',borderRight:i<3?'1px solid rgba(0,0,0,.07)':'none'}}>
               <div style={{fontSize:38,fontWeight:800,letterSpacing:'-.03em',lineHeight:1,color:'#3B3BF9'}}>{s.n}</div>
               <div style={{fontSize:12,color:'#4A4A6A',marginTop:7,lineHeight:1.5,fontWeight:300}}>{s.d}</div>
               <div style={{fontSize:9,color:'#9898B8',marginTop:5,textTransform:'uppercase',letterSpacing:'.05em'}}>{s.s}</div>
@@ -126,12 +126,12 @@ export default function Home() {
       </div>
 
       {/* HOW */}
-      <section id="how" style={{padding:'80px 56px',textAlign:'center'}}>
+      <section id="how" className="v-sec" style={{padding:'80px 56px',textAlign:'center'}}>
         <div style={{maxWidth:1000,margin:'0 auto'}}>
           <div style={{fontSize:11,fontWeight:700,color:'#3B3BF9',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:14}}>Comment ça marche</div>
-          <h2 style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',marginBottom:52,color:'#0F0F1A'}}>De zéro à ton premier<br/>vrai investissement</h2>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',maxWidth:900,margin:'0 auto',position:'relative'}}>
-            <div style={{position:'absolute',top:20,left:'12.5%',right:'12.5%',height:1,background:'rgba(0,0,0,.08)'}}></div>
+          <h2 className="v-h2" style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',marginBottom:52,color:'#0F0F1A'}}>De zéro à ton premier<br/>vrai investissement</h2>
+          <div className="v-grid-1" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',maxWidth:900,margin:'0 auto',position:'relative'}}>
+            <div className="v-hide-m" style={{position:'absolute',top:20,left:'12.5%',right:'12.5%',height:1,background:'rgba(0,0,0,.08)'}}></div>
             {[
               {n:'1',t:'Tu apprends les bases',d:'Quiz, fiches, scénarios réels. 10 min/jour.',active:false},
               {n:'2',t:'Tu valides tes compétences',d:'6 scénarios de marché réels. Un certificat.',active:true},
@@ -149,11 +149,11 @@ export default function Home() {
       </section>
 
       {/* RETARD */}
-      <section style={{background:'#F8F7F5',padding:'88px 56px',borderTop:'1px solid rgba(0,0,0,.08)'}}>
-        <div style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'1fr 1fr',gap:72,alignItems:'center'}}>
+      <section className="v-sec" style={{background:'#F8F7F5',padding:'88px 56px',borderTop:'1px solid rgba(0,0,0,.08)'}}>
+        <div style={{maxWidth:1000,margin:'0 auto',display:'grid',gridTemplateColumns:'1fr 1fr',gap:72,alignItems:'center'}} className="v-grid-1">
           <div>
             <div style={{fontSize:11,fontWeight:700,color:'#3B3BF9',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:14}}>Le constat</div>
-            <h2 style={{fontSize:34,fontWeight:800,letterSpacing:'-.03em',marginBottom:14,lineHeight:1.1}}>La France a <span style={{color:'#3B3BF9'}}>25 ans de retard</span> en éducation financière.</h2>
+            <h2 className="v-h2" style={{fontSize:34,fontWeight:800,letterSpacing:'-.03em',marginBottom:14,lineHeight:1.1}}>La France a <span style={{color:'#3B3BF9'}}>25 ans de retard</span> en éducation financière.</h2>
             <p style={{fontSize:14,color:'#4A4A6A',lineHeight:1.8,fontWeight:300}}>Aux États-Unis, investir fait partie de la culture depuis des décennies. En France, la bourse reste perçue comme complexe et risquée. Ce n&apos;est pas un problème de marché, c&apos;est un problème d&apos;éducation.</p>
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:13}}>
@@ -181,11 +181,11 @@ export default function Home() {
       </section>
 
       {/* FREINS */}
-      <section style={{padding:'88px 56px',background:'white'}}>
+      <section className="v-sec" style={{padding:'88px 56px',background:'white'}}>
         <div style={{maxWidth:1000,margin:'0 auto',textAlign:'center'}}>
           <div style={{fontSize:11,fontWeight:700,color:'#3B3BF9',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:14}}>Pourquoi les Français n&apos;investissent pas</div>
-          <h2 style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',color:'#0F0F1A'}}>Trois freins. Une réponse.</h2>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginTop:44,textAlign:'left'}}>
+          <h2 className="v-h2" style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',color:'#0F0F1A'}}>Trois freins. Une réponse.</h2>
+          <div className="v-grid-1" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20,marginTop:44,textAlign:'left'}}>
             {[
               {n:'82%',t:'Le manque de connaissances',d:'La première barrière citée. Pas le risque, l\'incompréhension. Veltis comble exactement ce fossé.',s:'Goliaths.io · 2024'},
               {n:'56%',t:'Investir confondu avec spéculer',d:'Un Français sur deux croit que la bourse c\'est le casino. Pourtant le CAC 40 a rapporté +7%/an sur 20 ans.',s:'Goliaths.io · 2024'},
@@ -203,12 +203,12 @@ export default function Home() {
       </section>
 
       {/* MODULES */}
-      <section id="modules" style={{background:'#F8F7F5',padding:'88px 56px',borderTop:'1px solid rgba(0,0,0,.08)'}}>
+      <section id="modules" className="v-sec" style={{background:'#F8F7F5',padding:'88px 56px',borderTop:'1px solid rgba(0,0,0,.08)'}}>
         <div style={{maxWidth:1000,margin:'0 auto',textAlign:'center'}}>
           <div style={{fontSize:11,fontWeight:700,color:'#3B3BF9',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:14}}>La formation</div>
-          <h2 style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',marginBottom:8,color:'#0F0F1A'}}>Six modules. Un parcours complet.</h2>
+          <h2 className="v-h2" style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',marginBottom:8,color:'#0F0F1A'}}>Six modules. Un parcours complet.</h2>
           <p style={{fontSize:13,color:'#9898B8',marginBottom:44,fontWeight:300}}>42 leçons · ~8h de contenu · Du débutant à l&apos;investisseur autonome</p>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14,textAlign:'left'}}>
+          <div className="v-grid-1" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14,textAlign:'left'}}>
             {[
               {n:'01',t:'Les bases absolues',d:"Action, dividende, PEA, CTO, flat tax 30%. Tout ce qu'on n'enseigne pas à l'école."},
               {n:'02',t:"Lire un cours d'action",d:'PER, rendement, 52 semaines, résultats trimestriels. Décrypter une fiche comme un analyste.'},
@@ -232,12 +232,12 @@ export default function Home() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing" style={{background:'#0F0F2A',padding:'88px 56px'}}>
+      <section id="pricing" className="v-sec" style={{background:'#0F0F2A',padding:'88px 56px'}}>
         <div style={{maxWidth:1060,margin:'0 auto',textAlign:'center'}}>
           <div style={{fontSize:11,fontWeight:700,color:'rgba(255,255,255,.3)',letterSpacing:'.1em',textTransform:'uppercase',marginBottom:12}}>Tarifs</div>
-          <h2 style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',color:'white',marginBottom:8}}>Simple et transparent.</h2>
+          <h2 className="v-h2" style={{fontSize:36,fontWeight:800,letterSpacing:'-.03em',color:'white',marginBottom:8}}>Simple et transparent.</h2>
           <p style={{fontSize:15,color:'rgba(255,255,255,.35)',marginBottom:48,fontWeight:300}}>Commence gratuitement. Passe Premium quand tu es prêt.</p>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10,textAlign:'left',alignItems:'stretch'}}>
+          <div className="v-grid-1" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:10,textAlign:'left',alignItems:'stretch'}}>
             {[
               {tier:'Gratuit',price:'0€',period:'pour toujours',featured:false,duo:false,items:['Modules 1 et 2 complets','Quiz et scénarios de base','Streak et XP'],locked:['Modules 3 à 6','Boussole portefeuille'],btn:'Gratuit'},
               {tier:'Premium',price:'7,99€',period:'par mois · sans engagement',featured:true,duo:false,popular:true,items:['Tous les modules (6)','Boussole sur ton vrai compte','Journal de bord investisseur','Alertes résultats personnalisées','Certificat Investisseur Veltis'],locked:[],btn:'Premium'},
@@ -264,7 +264,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer style={{background:'#0F0F2A',borderTop:'1px solid rgba(255,255,255,.05)',padding:'36px 56px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+      <footer className="v-footer" style={{background:'#0F0F2A',borderTop:'1px solid rgba(255,255,255,.05)',padding:'36px 56px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div style={{fontSize:18,fontWeight:700,color:'white'}}>Veltis<span style={{color:'rgba(255,255,255,.25)'}}>.</span></div>
         <div style={{fontSize:12,color:'rgba(255,255,255,.2)',fontWeight:300}}>Investir en bourse. On t&apos;explique tout.</div>
         <div style={{fontSize:11,color:'rgba(255,255,255,.12)'}}>© 2025 Veltis</div>
