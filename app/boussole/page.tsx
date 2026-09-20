@@ -193,17 +193,17 @@ export default function BoussollePage() {
     <div style={{ fontFamily: 'Sora,sans-serif', minHeight: '100vh', background: '#F8F7F5' }}>
 
       {/* NAV */}
-      <nav style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
+      <nav className="v-nav" style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <Link href="/" style={{ fontSize: 22, fontWeight: 800, textDecoration: 'none', color: '#0F0F1A', letterSpacing: '-.04em' }}>
           Veltis<span style={{ color: '#3B3BF9' }}>.</span>
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="v-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ fontSize: 11, background: '#EBEBFF', color: '#3B3BF9', padding: '4px 12px', borderRadius: 100, fontWeight: 700 }}>🧭 Boussole</div>
           <Link href="/dashboard" style={{ fontSize: 12, color: '#9898B8', textDecoration: 'none', padding: '6px 12px', borderRadius: 100, border: '1px solid rgba(0,0,0,.08)' }}>← Dashboard</Link>
         </div>
       </nav>
 
-      <div style={{ maxWidth: 960, margin: '0 auto', padding: '32px 20px' }}>
+      <div className="v-page" style={{ maxWidth: 960, margin: '0 auto', padding: '32px 20px' }}>
 
         {/* HEADER */}
         <div style={{ marginBottom: 28 }}>
@@ -240,7 +240,7 @@ export default function BoussollePage() {
         )}
 
         {/* TABS */}
-        <div style={{ display: 'flex', gap: 6, marginBottom: 24 }}>
+        <div className="v-tabs" style={{ display: 'flex', gap: 6, marginBottom: 24 }}>
           {([
             { id: 'portefeuille', label: '📊 Portefeuille' },
             { id: 'journal', label: '📓 Journal de bord' },
@@ -283,7 +283,7 @@ export default function BoussollePage() {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {/* Header */}
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', gap: 8, padding: '8px 16px', fontSize: 10, color: '#9898B8', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 700 }}>
+                <div className="v-pos-head" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', gap: 8, padding: '8px 16px', fontSize: 10, color: '#9898B8', textTransform: 'uppercase', letterSpacing: '.05em', fontWeight: 700 }}>
                   <span>Titre</span><span>Qté</span><span>Prix achat</span><span>Prix actuel</span><span>+/- value</span><span>Enveloppe</span><span></span>
                 </div>
                 {positions.map(pos => {
@@ -293,14 +293,14 @@ export default function BoussollePage() {
                   const pnlPct = ((pnl / (pos.prix_achat * pos.quantite)) * 100).toFixed(1)
                   const isPos = pnl >= 0
                   return (
-                    <div key={pos.id} style={{ background: 'white', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(0,0,0,.07)', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', gap: 8, alignItems: 'center' }}>
+                    <div key={pos.id} className="v-pos-row" style={{ background: 'white', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(0,0,0,.07)', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr 1fr 40px', gap: 8, alignItems: 'center' }}>
                       <div>
                         <div style={{ fontSize: 13, fontWeight: 700 }}>{pos.ticker}</div>
                         <div style={{ fontSize: 11, color: '#9898B8' }}>{pos.nom}</div>
                       </div>
-                      <div style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.quantite}</div>
-                      <div style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.prix_achat.toFixed(2)}€</div>
-                      <div>
+                      <div data-label="Qté" style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.quantite}</div>
+                      <div data-label="Prix achat" style={{ fontSize: 13, color: '#4A4A6A' }}>{pos.prix_achat.toFixed(2)}€</div>
+                      <div data-label="Prix actuel">
                         <input
                           type="number"
                           step="0.01"
@@ -315,11 +315,11 @@ export default function BoussollePage() {
                         />
                         <div style={{ fontSize: 9, color: '#9898B8', marginTop: 2 }}>{valActuelle.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€</div>
                       </div>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: isPos ? '#00D47E' : '#FF6B6B' }}>
+                      <div data-label="+/- value" style={{ fontSize: 13, fontWeight: 700, color: isPos ? '#00D47E' : '#FF6B6B' }}>
                         {isPos ? '+' : ''}{pnl.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€
                         <div style={{ fontSize: 10, fontWeight: 600 }}>{isPos ? '+' : ''}{pnlPct}%</div>
                       </div>
-                      <div>
+                      <div data-label="Enveloppe">
                         <span style={{ fontSize: 10, background: pos.enveloppe === 'PEA' ? '#EBEBFF' : '#F0FFF4', color: pos.enveloppe === 'PEA' ? '#3B3BF9' : '#00D47E', padding: '3px 8px', borderRadius: 100, fontWeight: 700 }}>
                           {pos.enveloppe}
                         </span>
@@ -361,10 +361,10 @@ export default function BoussollePage() {
 
             {/* MODAL AJOUT POSITION */}
             {showAddPosition && (
-              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
+              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20, overflowY: 'auto' }} className="v-modal">
                 <div style={{ background: 'white', borderRadius: 20, padding: 28, width: '100%', maxWidth: 480 }}>
                   <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 20 }}>Ajouter une position</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div className="v-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
                     <div>
                       <label style={labelStyle}>Ticker *</label>
                       <input style={inputStyle} placeholder="ex: TTE, AAPL, CW8" value={formTicker} onChange={e => setFormTicker(e.target.value.toUpperCase())} />
@@ -495,12 +495,12 @@ export default function BoussollePage() {
 
             {/* MODAL JOURNAL */}
             {showAddJournal && (
-              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20, overflowY: 'auto' }}>
+              <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20, overflowY: 'auto' }} className="v-modal">
                 <div style={{ background: 'white', borderRadius: 20, padding: 28, width: '100%', maxWidth: 560, margin: 'auto' }}>
                   <div style={{ fontSize: 17, fontWeight: 800, marginBottom: 6 }}>Documenter ma thèse d'investissement</div>
                   <div style={{ fontSize: 12, color: '#9898B8', marginBottom: 20, fontWeight: 300 }}>4 questions — 5 minutes — une décision plus rationnelle</div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
+                  <div className="v-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
                     <div>
                       <label style={labelStyle}>Ticker *</label>
                       <input style={inputStyle} placeholder="ex: TTE" value={jTicker} onChange={e => setJTicker(e.target.value.toUpperCase())} />
@@ -572,7 +572,7 @@ export default function BoussollePage() {
                 {/* Résumé exécutif */}
                 <div style={{ background: '#0F0F2A', borderRadius: 16, padding: 24 }}>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,.4)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.06em' }}>Résumé exécutif · {new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 16 }}>
+                  <div className="v-report-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16, marginBottom: 16 }}>
                     {[
                       { label: 'Valeur totale', val: `${portfolioStats.totalActuel.toLocaleString('fr-FR', { maximumFractionDigits: 0 })}€`, color: 'white' },
                       { label: 'Performance', val: `${portfolioStats.totalPnl >= 0 ? '+' : ''}${pnlPct}%`, color: portfolioStats.totalPnl >= 0 ? '#00D47E' : '#FF6B6B' },
