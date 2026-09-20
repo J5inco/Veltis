@@ -83,23 +83,23 @@ export default function Dashboard() {
     <div style={{fontFamily:'Sora,sans-serif',minHeight:'100vh',background:'#F8F7F5'}}>
 
       {/* NAV */}
-      <nav style={{background:'white',borderBottom:'1px solid rgba(0,0,0,.08)',padding:'14px 40px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:100}}>
+      <nav className="v-nav" style={{background:'white',borderBottom:'1px solid rgba(0,0,0,.08)',padding:'14px 40px',display:'flex',alignItems:'center',justifyContent:'space-between',position:'sticky',top:0,zIndex:100}}>
         <Link href="/" style={{fontSize:22,fontWeight:800,textDecoration:'none',color:'#0F0F1A',letterSpacing:'-.04em'}}>
           Veltis<span style={{color:'#3B3BF9'}}>.</span>
         </Link>
-        <div style={{display:'flex',alignItems:'center',gap:12}}>
+        <div className="v-nav-links" style={{display:'flex',alignItems:'center',gap:12}}>
           <Link href="/actu" style={{fontSize:12,color:'#4A4A6A',textDecoration:'none',padding:'6px 12px',borderRadius:100,border:'1px solid rgba(0,0,0,.08)'}}>📰 Actu</Link>
-          <div style={{fontSize:12,color:'#9898B8',background:'#F8F7F5',padding:'6px 12px',borderRadius:100}}>{user?.email}</div>
-          <button onClick={handleLogout} style={{fontSize:12,color:'#9898B8',background:'none',border:'1px solid rgba(0,0,0,.1)',borderRadius:100,padding:'6px 14px',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>Déconnexion</button>
+          <div className="v-hide-m" style={{fontSize:12,color:'#9898B8',background:'#F8F7F5',padding:'6px 12px',borderRadius:100}}>{user?.email}</div>
+          <button onClick={handleLogout} className="v-nav-btn" style={{fontSize:12,color:'#9898B8',background:'none',border:'1px solid rgba(0,0,0,.1)',borderRadius:100,padding:'6px 14px',cursor:'pointer',fontFamily:'Sora,sans-serif'}}>Déconnexion</button>
         </div>
       </nav>
 
-      <div style={{maxWidth:900,margin:'0 auto',padding:'40px 24px'}}>
+      <div className="v-page" style={{maxWidth:900,margin:'0 auto',padding:'40px 24px'}}>
 
         {/* HEADER */}
         <div style={{marginBottom:28}}>
           <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12,marginBottom:16}}>
-            <h1 style={{fontSize:28,fontWeight:800,letterSpacing:'-.03em'}}>Bonjour {prenom} 👋</h1>
+            <h1 className="v-h1-sm" style={{fontSize:28,fontWeight:800,letterSpacing:'-.03em'}}>Bonjour {prenom} 👋</h1>
             {streakData && (() => {
               const level = getLevel(streakData.total_xp)
               const progress = getLevelProgress(streakData.total_xp)
@@ -166,7 +166,7 @@ export default function Dashboard() {
               const badgeColor = getBadgeColor(pct)
 
               return (
-                <div key={mod.id} style={{background:'white',borderRadius:16,border:`1px solid ${isCompleted ? badgeColor + '40' : 'rgba(59,59,249,.12)'}`,padding:20,display:'flex',alignItems:'center',gap:16,transition:'all .15s'}}>
+                <div key={mod.id} style={{background:'white',borderRadius:16,border:`1px solid ${isCompleted ? badgeColor + '40' : 'rgba(59,59,249,.12)'}`,padding:20,display:'flex',alignItems:'center',gap:16,transition:'all .15s'}} className="v-mod-card">
 
                   {/* MODULE NUMBER + RING */}
                   <div style={{position:'relative',width:52,height:52,flexShrink:0}}>
@@ -179,8 +179,8 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  <div style={{flex:1}}>
-                    <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:3}}>
+                  <div className="v-mod-body" style={{flex:1}}>
+                    <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:3,flexWrap:'wrap'}}>
                       <div style={{fontSize:14,fontWeight:700,color:'#0F0F1A'}}>{mod.title}</div>
                       {isCompleted && (
                         <div style={{fontSize:10,fontWeight:700,background:badgeColor+'20',color:badgeColor,padding:'2px 8px',borderRadius:100}}>
@@ -195,7 +195,7 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  <div style={{flexShrink:0,display:'flex',gap:8}}>
+                  <div className="v-mod-actions" style={{flexShrink:0,display:'flex',gap:8}}>
                     {isCompleted && (
                       <Link href={`/module/${mod.id}/lecon/1`} style={{background:'transparent',color:'#9898B8',padding:'9px 16px',borderRadius:100,fontSize:11,fontWeight:600,textDecoration:'none',border:'1px solid rgba(0,0,0,.1)',whiteSpace:'nowrap'}}>
                         Refaire
@@ -212,7 +212,7 @@ export default function Dashboard() {
         </div>
 
         {/* BOUSSOLE BANNER */}
-        <div style={{background:'#0F0F2A',borderRadius:20,padding:28,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <div className="v-banner" style={{background:'#0F0F2A',borderRadius:20,padding:28,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <div>
             <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:6}}>
               <div style={{fontSize:16,fontWeight:800,color:'white'}}>🧭 Boussole — Suivi de ton portefeuille</div>
