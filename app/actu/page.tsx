@@ -16,7 +16,7 @@ export default function ActuPage() {
   return (
     <div style={{ fontFamily: 'Sora,sans-serif', minHeight: '100vh', background: '#F8F7F5' }}>
       {/* NAV */}
-      <nav style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,.08)', padding: '14px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
+      <nav className="v-nav" style={{ background: 'white', borderBottom: '1px solid rgba(0,0,0,.08)', padding: '14px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 100 }}>
         <Link href="/" style={{ fontSize: 22, fontWeight: 800, textDecoration: 'none', color: '#0F0F1A', letterSpacing: '-.04em' }}>
           Veltis<span style={{ color: '#3B3BF9' }}>.</span>
         </Link>
